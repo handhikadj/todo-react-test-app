@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Checkbox, Dialog, Menu } from '@mui/material';
+import { Checkbox, Dialog, Menu, Snackbar } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import todoBackButtonImg from '../../assets/images/todo-back-button.png';
@@ -16,6 +16,7 @@ import todoOldestSortImg from '../../assets/images/todo-oldest-sort.png';
 import todoAToZSortImg from '../../assets/images/todo-a-to-z-sort.png';
 import todoZToASortImg from '../../assets/images/todo-z-to-a-sort.png';
 import todoUnfinishedSortImg from '../../assets/images/todo-unfinished-sort.png';
+import activityDeletedIcon from '../../assets/images/activity-deleted-icon.png';
 
 const ActivityGroup = () => {
   const { id: urlIdParam } = useParams();
@@ -29,6 +30,8 @@ const ActivityGroup = () => {
   const [anchorSortTodoMenu, setAnchorSortTodoMenu] = useState(null);
   const [openDeleteDataDialog, setOpenDeleteDataDialog] = useState(false);
   const [selectedTodoItem, setSelectedTodoItem] = useState(null);
+  const [openDeletedTodoItemDialog, setOpenDeletedTodoItemDialog] =
+    useState(false);
   const [selectedSortTodoItemId, setSelectedSortTodoItemId] = useState(1);
   const [sortItems, setSortItems] = useState([
     {
@@ -173,6 +176,8 @@ const ActivityGroup = () => {
 
     await axiosInstance.delete(`/todo-items/${todoItemId}`);
 
+    setOpenDeletedTodoItemDialog(true);
+
     handleCloseDeleteDataDialog();
     loadActivityGroup();
   };
@@ -239,7 +244,11 @@ const ActivityGroup = () => {
         </Link>
 
         {!editingTitle ? (
-          <h1 className="activity-group-title" data-cy="todo-title">
+          <h1
+            className="activity-group-title"
+            data-cy="todo-title"
+            onClick={editTitle}
+          >
             {currentActivityGroupTitle}
           </h1>
         ) : (
@@ -403,6 +412,33 @@ const ActivityGroup = () => {
             }
           />
         </Dialog>
+
+        <Snackbar
+          autoHideDuration={3000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={openDeletedTodoItemDialog}
+          onClose={() => {
+            console.log('closed');
+            setOpenDeletedTodoItemDialog(false);
+          }}
+          key="top center"
+        >
+          <div
+            className="activity-deleted-toast"
+            data-cy="modal-information"
+            onClick={() => setOpenDeletedTodoItemDialog(false)}
+          >
+            <img
+              src={activityDeletedIcon}
+              alt={activityDeletedIcon}
+              className="activity-deleted-icon-img"
+              data-cy="modal-information-icon"
+            />
+            <span className="text" data-cy="modal-information-title">
+              Activity berhasil dihapus
+            </span>
+          </div>
+        </Snackbar>
       </div>
     </div>
   );
