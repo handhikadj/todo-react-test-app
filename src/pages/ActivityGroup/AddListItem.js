@@ -106,7 +106,10 @@ const AddListItem = ({
 
   const formatOptionLabel = ({ id, priority, label }, { context }) => (
     <div className="add-list-item-priority-option w-full">
-      <div className={`dot-priority ${priority}`} style={{ marginRight: 20 }} />
+      <div
+        className={`dot-priority ${priority}`}
+        style={{ marginRight: 20, width: 14, height: 14 }}
+      />
       <span>{label}</span>
       <div style={{ flex: 1 }} />
       <SelectedSortItem

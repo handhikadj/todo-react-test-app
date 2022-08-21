@@ -9,6 +9,8 @@ import { dayJsAppDefault } from './services/dateUtils';
 
 dayJsAppDefault();
 
+document.title = 'Todo App by Handika Dwi';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

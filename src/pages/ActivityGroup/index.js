@@ -1,6 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Checkbox, Dialog, Menu } from '@mui/material';
-import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import todoBackButtonImg from '../../assets/images/todo-back-button.png';
@@ -12,6 +11,11 @@ import todoSortButtonImg from '../../assets/images/todo-sort-button.png';
 import SortTodo from './SortTodo';
 import activityItemDeleteButton from '../../assets/images/activity-item-delete-button.png';
 import DeleteData from '../../components/common/DeleteData';
+import todoNewestSortImg from '../../assets/images/todo-newest-sort.png';
+import todoOldestSortImg from '../../assets/images/todo-oldest-sort.png';
+import todoAToZSortImg from '../../assets/images/todo-a-to-z-sort.png';
+import todoZToASortImg from '../../assets/images/todo-z-to-a-sort.png';
+import todoUnfinishedSortImg from '../../assets/images/todo-unfinished-sort.png';
 
 const ActivityGroup = () => {
   const { id: urlIdParam } = useParams();
@@ -26,10 +30,57 @@ const ActivityGroup = () => {
   const [openDeleteDataDialog, setOpenDeleteDataDialog] = useState(false);
   const [selectedTodoItem, setSelectedTodoItem] = useState(null);
   const [selectedSortTodoItemId, setSelectedSortTodoItemId] = useState(1);
+  const [sortItems, setSortItems] = useState([
+    {
+      id: 1,
+      img: todoNewestSortImg,
+      name: 'newest',
+      label: 'Terbaru',
+      selected: true,
+    },
+    {
+      id: 2,
+      img: todoOldestSortImg,
+      name: 'oldest',
+      label: 'Terlama',
+      selected: false,
+    },
+    {
+      id: 3,
+      img: todoAToZSortImg,
+      name: 'a-z',
+      label: 'A-Z',
+      selected: false,
+    },
+    {
+      id: 4,
+      img: todoZToASortImg,
+      name: 'z-a',
+      label: 'Z-A',
+      selected: false,
+    },
+    {
+      id: 5,
+      img: todoUnfinishedSortImg,
+      name: 'unfinished',
+      label: 'Belum Selesai',
+      selected: false,
+    },
+  ]);
 
   const inputCurrentActivityGroupRef = useRef(null);
 
+  const resetSelectedSortItem = () => {
+    const newSortItems = [...sortItems];
+
+    newSortItems.forEach((item) => (item.selected = false));
+
+    newSortItems[0].selected = true;
+    setSortItems(newSortItems);
+  };
+
   const loadActivityGroup = async () => {
+    resetSelectedSortItem();
     const { data } = await axiosInstance.get(`/activity-groups/${urlIdParam}`);
     setCurrentActivityGroup(data);
     setTodos(data.todo_items);
@@ -126,8 +177,43 @@ const ActivityGroup = () => {
     loadActivityGroup();
   };
 
-  const onSortTodoSorted = (sortItem) => {
-    setSelectedSortTodoItemId(sortItem.id);
+  const sortTheTodoItems = ({ name }) => {
+    const newTodos = [...todos];
+
+    if (name === 'oldest') {
+      setTodos(newTodos.sort((a, b) => a.id - b.id));
+      return;
+    }
+
+    if (name === 'a-z') {
+      setTodos(newTodos.sort((a, b) => a.title.localeCompare(b.title)));
+      return;
+    }
+
+    if (name === 'z-a') {
+      setTodos(newTodos.sort((a, b) => b.title.localeCompare(a.title)));
+      return;
+    }
+
+    if (name === 'unfinished') {
+      setTodos(newTodos.sort((a, b) => b.is_active - a.is_active));
+      return;
+    }
+
+    // default/newest
+    setTodos(newTodos.sort((a, b) => b.id - a.id));
+  };
+
+  const onSortTodoSorted = (sortItem, index) => {
+    const newSortItems = [...sortItems];
+
+    newSortItems.forEach((item) => (item.selected = false));
+
+    newSortItems[index].selected = true;
+    setSortItems(newSortItems);
+
+    sortTheTodoItems(sortItem);
+
     setAnchorSortTodoMenu(null);
   };
 
@@ -197,8 +283,8 @@ const ActivityGroup = () => {
           elevation={4}
         >
           <SortTodo
+            sortItems={sortItems}
             onTodoItemsSorted={onSortTodoSorted}
-            selectedSortItemId={selectedSortTodoItemId}
           />
         </Menu>
 
@@ -249,6 +335,7 @@ const ActivityGroup = () => {
           todos.map((todoItem, index) => (
             <div className="w-full h-full todo-item" key={todoItem.id}>
               <Checkbox
+                disableRipple
                 onChange={() => onTodoItemCheckboxChange(todoItem, index)}
                 checked={!todoItem.is_active}
               />
