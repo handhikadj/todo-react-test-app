@@ -8,10 +8,14 @@ const DeleteData = ({
   onConfirm,
   isDeleteLoading = false,
 }) => (
-  <Box className="delete-data delete-data-box">
-    <img src={deleteDataIconImg} alt={deleteDataIconImg} />
+  <Box className="delete-data delete-data-box" data-cy="modal-delete">
+    <img
+      src={deleteDataIconImg}
+      alt={deleteDataIconImg}
+      data-cy="modal-delete-icon"
+    />
 
-    <p className="description-text">
+    <p className="description-text" data-cy="modal-delete-title">
       {isActivityGroup
         ? 'Apakah anda yakin menghapus activity'
         : 'Apakah anda yakin menghapus List Item'}
@@ -24,6 +28,7 @@ const DeleteData = ({
         type="button"
         className="btn-dialog cancel"
         onClick={onCancel}
+        data-cy="modal-delete-cancel-button"
       >
         Batal
       </button>
@@ -32,6 +37,7 @@ const DeleteData = ({
         type="button"
         className="btn-dialog confirm"
         onClick={onConfirm}
+        data-cy="modal-delete-confirm-button"
       >
         {isDeleteLoading ? (
           <CircularProgress size={20} color="inherit" thickness={5} />

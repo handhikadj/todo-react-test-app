@@ -73,12 +73,15 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="activity-tambah-section">
-        <h1 className="activity-group-title">Activity</h1>
+        <h1 className="activity-group-title" data-cy="activity-title">
+          Activity
+        </h1>
 
         <button
           type="button"
           className="add-button"
           onClick={onAddActivityButtonClicked}
+          data-cy="activity-add-button"
         >
           <AddIcon style={{ marginRight: '10px' }} />
           Tambah
@@ -92,6 +95,7 @@ const Dashboard = () => {
             alt={activityEmptyStateImg}
             onClick={onAddActivityButtonClicked}
             className="cursor-pointer"
+            data-cy="activity-empty-state"
           />
         ) : (
           activityGroups.map((activityGroup, index) => (
@@ -99,12 +103,15 @@ const Dashboard = () => {
               to={`/activity-group/${activityGroup.id}`}
               key={index}
               style={{ textDecoration: 'none' }}
+              data-cy="activity-item"
             >
               <div className="activity-list">
-                <h1 className="title h-full">{activityGroup.title}</h1>
+                <h1 className="title h-full" data-cy="activity-item-title">
+                  {activityGroup.title}
+                </h1>
 
                 <div className="remark">
-                  <span className="timestamp">
+                  <span className="timestamp" data-cy="activity-item-date">
                     {dayjs(activityGroup.created_at).format('D MMMM YYYY')}
                   </span>
                   <img
@@ -115,6 +122,7 @@ const Dashboard = () => {
                       e.preventDefault();
                       onDeleteActivityButtonClicked(activityGroup);
                     }}
+                    data-cy="activity-item-delete-button"
                   />
                 </div>
               </div>
@@ -145,16 +153,26 @@ const Dashboard = () => {
         autoHideDuration={3000}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={openActivityGroupDeletedSnackbar}
-        onClose={() => setOpenActivityGroupDeletedSnackbar(false)}
+        onClose={() => {
+          console.log('closed');
+          setOpenActivityGroupDeletedSnackbar(false);
+        }}
         key="top center"
       >
-        <div className="activity-deleted-toast">
+        <div
+          className="activity-deleted-toast"
+          data-cy="modal-information"
+          onClick={() => setOpenActivityGroupDeletedSnackbar(false)}
+        >
           <img
             src={activityDeletedIcon}
             alt={activityDeletedIcon}
             className="activity-deleted-icon-img"
+            data-cy="modal-information-icon"
           />
-          <span className="text">Activity berhasil dihapus</span>
+          <span className="text" data-cy="modal-information-title">
+            Activity berhasil dihapus
+          </span>
         </div>
       </Snackbar>
     </div>

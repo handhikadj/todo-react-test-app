@@ -230,7 +230,7 @@ const ActivityGroup = () => {
   return (
     <div className="activity-group">
       <div className="activity-tambah-section">
-        <Link to="/" style={{ lineHeight: 0 }}>
+        <Link to="/" style={{ lineHeight: 0 }} data-cy="todo-back-button">
           <img
             src={todoBackButtonImg}
             alt={todoBackButtonImg}
@@ -239,7 +239,9 @@ const ActivityGroup = () => {
         </Link>
 
         {!editingTitle ? (
-          <h1 className="activity-group-title">{currentActivityGroupTitle}</h1>
+          <h1 className="activity-group-title" data-cy="todo-title">
+            {currentActivityGroupTitle}
+          </h1>
         ) : (
           <input
             className="activity-group-title"
@@ -261,6 +263,7 @@ const ActivityGroup = () => {
             alt={todoTitleEditButtonImg}
             style={{ marginTop: '10px' }}
             onClick={editTitle}
+            data-cy="todo-title-edit-button"
           />
         </div>
 
@@ -270,6 +273,7 @@ const ActivityGroup = () => {
             alt={todoSortButtonImg}
             className="cursor-pointer"
             onClick={handleSortBtnClick}
+            data-cy="todo-sort-button"
           />
         )}
 
@@ -293,6 +297,7 @@ const ActivityGroup = () => {
           className="add-button"
           style={{ marginLeft: '18px' }}
           onClick={() => setOpenAddListItemDialog(true)}
+          data-cy="todo-add-button"
         >
           <AddIcon style={{ marginRight: '10px' }} />
           Tambah
@@ -329,25 +334,33 @@ const ActivityGroup = () => {
               alt={todoEmptyStateImg}
               onClick={() => setOpenAddListItemDialog(true)}
               className="cursor-pointer"
+              data-cy="todo-empty-state"
             />
           </div>
         ) : (
           todos.map((todoItem, index) => (
-            <div className="w-full h-full todo-item" key={todoItem.id}>
+            <div
+              className="w-full h-full todo-item"
+              key={todoItem.id}
+              data-cy="todo-item"
+            >
               <Checkbox
                 disableRipple
                 onChange={() => onTodoItemCheckboxChange(todoItem, index)}
                 checked={!todoItem.is_active}
+                data-cy="todo-item-checkbox"
               />
 
               <div
                 className={`dot-priority ${todoItem.priority}`}
                 style={{ margin: '0 20px 0 10px' }}
+                data-cy="todo-item-priority-indicator"
               />
 
               <span
                 className={`todo-title ${!todoItem.is_active ? 'done' : ''}`}
                 style={{ marginRight: 20 }}
+                data-cy="todo-item-title"
               >
                 {todoItem.title}
               </span>
@@ -357,6 +370,7 @@ const ActivityGroup = () => {
                 alt={todoTitleEditButtonImg}
                 className="cursor-pointer"
                 onClick={() => onEditTodoClicked(todoItem)}
+                data-cy="todo-item-edit-button"
               />
 
               <div style={{ flex: 1 }} />
@@ -369,6 +383,7 @@ const ActivityGroup = () => {
                   e.preventDefault();
                   onDeleteDataButtonClicked(todoItem);
                 }}
+                data-cy="todo-item-delete-button"
               />
             </div>
           ))

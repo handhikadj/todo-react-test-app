@@ -58,6 +58,7 @@ export const prioritySelectOptions = [
   {
     id: 3,
     priority: 'normal',
+    alias: 'medium',
     label: 'Medium',
   },
   {
@@ -104,8 +105,11 @@ const AddListItem = ({
     onSubmitted({ listItemName, selectedOptionValue });
   };
 
-  const formatOptionLabel = ({ id, priority, label }, { context }) => (
-    <div className="add-list-item-priority-option w-full">
+  const formatOptionLabel = ({ id, priority, alias, label }, { context }) => (
+    <div
+      className="add-list-item-priority-option w-full"
+      data-cy="modal-add-priority-item"
+    >
       <div
         className={`dot-priority ${priority}`}
         style={{ marginRight: 20, width: 14, height: 14 }}
@@ -135,21 +139,28 @@ const AddListItem = ({
   }, [defaultFormValues]);
 
   return (
-    <div className="add-list-item">
+    <div className="add-list-item" data-cy="modal-add">
       <div className="modal-title-section">
-        <h1 className="title">Tambah List Item</h1>
+        <h1 className="title" data-cy="modal-add-title">
+          Tambah List Item
+        </h1>
 
         <img
           src={modalAddListItemCloseImg}
           alt={modalAddListItemCloseImg}
           className="cursor-pointer"
           onClick={onCloseClicked}
+          data-cy="modal-add-close-button"
         />
       </div>
 
       <div className="modal-content-section">
         <div className="input-form">
-          <label htmlFor="list-item-name" className="todo-label-form w-fit">
+          <label
+            htmlFor="list-item-name"
+            className="todo-label-form w-fit"
+            data-cy="modal-add-name-title"
+          >
             NAMA LIST ITEM
           </label>
           <input
@@ -157,6 +168,7 @@ const AddListItem = ({
             className="list-item-name-input w-full"
             value={listItemName}
             onChange={(e) => setListItemName(e.target.value)}
+            data-cy="modal-add-name-input"
           />
         </div>
 
@@ -165,11 +177,12 @@ const AddListItem = ({
             htmlFor="priority"
             className="todo-label-form"
             style={{ marginBottom: '10px' }}
+            data-cy="modal-add-priority-title"
           >
             PRIORITY
           </label>
 
-          <div style={{ width: 205 }}>
+          <div style={{ width: 205 }} data-cy="modal-add-priority-dropdown">
             <Select
               options={prioritySelectOptions}
               components={{
@@ -194,6 +207,7 @@ const AddListItem = ({
           type="button"
           onClick={onSaveClicked}
           className="cursor-pointer"
+          data-cy="modal-add-save-button"
         >
           Simpan
         </button>

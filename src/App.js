@@ -4,10 +4,18 @@ import AppRoutes from './routes';
 
 const App = () => (
   <div className="app">
-    <AppBar elevation={0} className="app-bar" position="fixed" color="primary">
+    <AppBar
+      elevation={0}
+      className="app-bar"
+      position="fixed"
+      color="primary"
+      data-cy="header-background"
+    >
       <Toolbar>
         <Container className="common-container" maxWidth={false}>
-          <h1 className="appbar-title">TO DO LIST APP</h1>
+          <h1 className="appbar-title" data-cy="header-title">
+            TO DO LIST APP
+          </h1>
         </Container>
       </Toolbar>
     </AppBar>

@@ -7,10 +7,18 @@ const SortTodo = ({ sortItems, onTodoItemsSorted }) => (
         className={`sort-item ${index > 0 ? 'border-top' : ''}`}
         key={index}
         onClick={() => onTodoItemsSorted(sortItem, index)}
+        data-cy="sort-selection"
       >
-        <img className="item-img" src={sortItem.img} alt={sortItem.img} />
+        <img
+          className="item-img"
+          src={sortItem.img}
+          alt={sortItem.img}
+          data-cy="sort-selection-icon"
+        />
 
-        <p className="item-name">{sortItem.label}</p>
+        <p className="item-name" data-cy="sort-selection-title">
+          {sortItem.label}
+        </p>
 
         {sortItem.selected && (
           <img
