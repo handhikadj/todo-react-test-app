@@ -24,6 +24,7 @@ const SortTodo = ({ sortItems, onTodoItemsSorted }) => (
           <img
             src={todoCurrentSelectedSortImg}
             alt={todoCurrentSelectedSortImg}
+            data-cy="sort-selection-selected"
           />
         )}
       </div>
