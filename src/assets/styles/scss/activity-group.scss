@@ -1,0 +1,55 @@
+.activity-group {
+    .todo-back-button {
+        margin-right: 30px;
+        width: 16px;
+        cursor: pointer;
+    }
+
+    .todo-list {
+        display: flex;
+    }
+
+    .activity-tambah-section {
+        h1.activity-group-title {
+            flex: initial;
+            max-width: 400px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        input.activity-group-title {
+            background: inherit;
+            border: 0;
+            line-height: 54px;
+            margin: 0;
+            padding: 0;
+
+            &:focus {
+                outline: 0;
+            }
+        }
+    }
+
+    .todo-item {
+        padding: 30px;
+        background: #FFFFFF;
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+
+        .todo-title {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 27px;
+            color: #111111;
+
+            &.done {
+               text-decoration: line-through; 
+               color: #888888 !important;
+            }
+        }
+    }
+}

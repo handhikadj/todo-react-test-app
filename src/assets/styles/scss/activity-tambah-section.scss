@@ -1,0 +1,26 @@
+.activity-tambah-section {
+    display: flex;
+    align-items: center;
+
+    .title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 36px;
+        color: #111111;
+        margin: 0;
+        flex: 1;
+    }
+
+    .add-button {
+        padding: 13px 21px 13px 14px;
+        color: white;
+        background: #16ABF8;
+        border-radius: 45px;
+        border: 0;
+        display: flex;
+        align-items: center;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+    }
+}
