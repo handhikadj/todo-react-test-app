@@ -6,7 +6,7 @@ const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
       <Route index path="/" element={<Dashboard />} />
-      <Route index path="/activity-group/:id" element={<ActivityGroup />} />
+      <Route path="/activity-group/:id" element={<ActivityGroup />} />
     </Routes>
   </BrowserRouter>
 );
